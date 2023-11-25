@@ -1,12 +1,20 @@
 package com.example.retrofitcrud.ui.screens.users
 
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,11 +30,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.retrofitcrud.R
+import com.example.retrofitcrud.data.model.User
 import com.example.retrofitcrud.ui.AppViewModelProvider
 import com.example.retrofitcrud.ui.components.DefaultTopAppBar
 import com.example.retrofitcrud.ui.navigation.NavigationDestination
@@ -52,6 +63,7 @@ fun DetailsScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val user = uiState.value.userDetails.toUser()
 
@@ -71,8 +83,17 @@ fun DetailsScreen(
                     IconButton(
                         onClick = {
                             coroutineScope.launch {
-                                viewModel.deleteUser()
-                                navigateBack()
+                                try {
+                                    viewModel.deleteUser()
+                                    navigateBack()
+                                } catch (e: Exception) {
+                                    Log.e("RetrofitCRUD", "exception", e);
+                                    Toast.makeText(
+                                        context,
+                                        "An unknown error occurred",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     ) {
@@ -88,11 +109,18 @@ fun DetailsScreen(
         }, modifier = modifier
     ) { innerPadding ->
         DetailsBody(
+            user = user,
             modifier = Modifier.padding(innerPadding),
             onDelete = {
                 coroutineScope.launch {
-                    viewModel.deleteUser()
-                    navigateBack()
+                    try {
+                        viewModel.deleteUser()
+                        navigateBack()
+                    } catch (e: Exception) {
+                        Log.e("RetrofitCRUD", "exception", e);
+                        Toast.makeText(context, "An unknown error occurred", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         )
@@ -101,6 +129,7 @@ fun DetailsScreen(
 
 @Composable
 private fun DetailsBody(
+    user: User,
     modifier: Modifier = Modifier,
     onDelete: () -> Unit,
 ) {
@@ -109,7 +138,10 @@ private fun DetailsBody(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
-
+        Details(
+            user = user,
+            modifier = Modifier.fillMaxWidth()
+        )
         if (deleteConfirmationRequired) {
             DeleteConfirmationDialog(
                 onDeleteConfirm = {
@@ -120,6 +152,60 @@ private fun DetailsBody(
                 modifier = Modifier.padding(16.dp)
             )
         }
+    }
+}
+
+
+@Composable
+fun Details(
+    user: User,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier, colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            DetailsRow(
+                labelResID = R.string.email,
+                incidentDetail = user.email,
+                modifier = Modifier.padding(
+                    horizontal = 16.dp
+                )
+            )
+            DetailsRow(
+                labelResID = R.string.first_name,
+                incidentDetail = user.firstName,
+                modifier = Modifier.padding(
+                    horizontal = 16.dp
+                )
+            )
+            DetailsRow(
+                labelResID = R.string.last_name,
+                incidentDetail = user.lastName,
+                modifier = Modifier.padding(
+                    horizontal = 16.dp
+                )
+            )
+        }
+    }
+}
+
+@Composable
+private fun DetailsRow(
+    @StringRes labelResID: Int, incidentDetail: String, modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        Text(text = stringResource(labelResID))
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text = incidentDetail, fontWeight = FontWeight.Bold)
     }
 }
 

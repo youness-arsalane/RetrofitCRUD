@@ -1,5 +1,7 @@
 package com.example.retrofitcrud.ui.screens.users
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,6 +45,8 @@ fun EntryScreen(
     viewModel: UserEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             DefaultTopAppBar(
@@ -56,8 +61,13 @@ fun EntryScreen(
             onUserValueChange = { viewModel.updateUiState(it) },
             onSaveClick = {
                 coroutineScope.launch {
-                    viewModel.saveUser()
-                    navigateBack()
+                    try {
+                        viewModel.saveUser()
+                        navigateBack()
+                    } catch (e: Exception) {
+                        Log.e("RetrofitCRUD", "exception", e);
+                        Toast.makeText(context, "An unknown error occurred", Toast.LENGTH_SHORT).show()
+                    }
                 }
             },
             modifier = Modifier
