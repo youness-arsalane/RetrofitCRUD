@@ -57,7 +57,7 @@ fun EditScreen(
                         viewModel.updateUser()
                         navigateBack()
                     } catch (e: Exception) {
-                        Log.e("RetrofitCRUD", "exception", e);
+                        Log.e("RetrofitCRUD", "exception", e)
                         Toast.makeText(context, "An unknown error occurred", Toast.LENGTH_SHORT).show()
                     }
                 }

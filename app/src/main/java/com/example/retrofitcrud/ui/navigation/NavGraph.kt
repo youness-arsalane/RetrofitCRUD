@@ -56,8 +56,6 @@ fun RetrofitCRUDNavHost(
                 type = NavType.IntType
             })
         ) {
-            val userId = it.arguments?.getInt(UserDetailsDestination.userIdArg) ?: 0
-
             UserDetailsScreen(
                 navigateToEditUser = { navController.navigate("${UserEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }

@@ -1,16 +1,14 @@
-package com.example.retrofitcrud.data
+package com.example.retrofitcrud.data.retrofit
 
 import com.example.retrofitcrud.data.model.User
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.DELETE
 import retrofit2.http.Path
 
-interface IApiService {
+interface ApiService {
     @GET("/users")
     suspend fun getUsers(): List<User>
 
@@ -26,12 +24,3 @@ interface IApiService {
     @DELETE("/users/{id}")
     suspend fun deleteUser(@Path("id") id: Int)
 }
-
-/* if the Ktor server is hosted locally, use your local IP address */
-private const val BASE_URL = "http://192.168.2.14:8080"
-private val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-    .addConverterFactory(GsonConverterFactory.create())
-    .build()
-
-val apiService: IApiService = retrofit.create(IApiService::class.java)

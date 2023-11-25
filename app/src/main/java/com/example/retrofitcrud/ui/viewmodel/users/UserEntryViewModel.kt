@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.retrofitcrud.data.AppDataContainer
 import com.example.retrofitcrud.data.model.User
-import java.util.Date
 
 class UserEntryViewModel(
     private val appContainer: AppDataContainer

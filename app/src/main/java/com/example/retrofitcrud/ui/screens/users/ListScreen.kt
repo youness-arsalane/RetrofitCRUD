@@ -97,6 +97,7 @@ private fun ListBody(
     onUserClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -125,7 +126,6 @@ private fun UserList(
 ) {
     LazyColumn(modifier = modifier) {
         items(items = userList, key = { it.id }) { user ->
-
             UserListItem(
                 user = user,
                 modifier = Modifier
@@ -159,12 +159,5 @@ private fun UserListItem(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ListBodyEmptyListPreview() {
-    RetrofitCRUDTheme {
     }
 }

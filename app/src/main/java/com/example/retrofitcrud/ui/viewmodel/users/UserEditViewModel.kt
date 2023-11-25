@@ -1,5 +1,6 @@
 package com.example.retrofitcrud.ui.viewmodel.users
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,6 +25,7 @@ class UserEditViewModel(
 
     init {
         viewModelScope.launch {
+            Log.d("HOOD_ALERT_DEBUG", "launch2 -> ID: $userId")
             userUiState = appContainer.usersRepository.getUser(userId)
                 .toUserUiState(true)
         }
