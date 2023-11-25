@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">RetrofitCRUD</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="users">Users</string>
+    <string name="add_user">Add user</string>
+    <string name="attention">Attention</string>
+    <string name="back_button">Back</string>
+    <string name="delete">Delete</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="no_user_description">No users found yet.</string>
+    <string name="edit_user_title">Edit User</string>
+    <string name="user_detail_title">User Details</string>
+    <string name="user_entry_title">Add User</string>
+    <string name="save_action">Save</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="required_fields">*required fields</string>
+    <string name="register">Register</string>
+    <string name="register_title">Register</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="name">Name</string>
+    <string name="user">User</string>
+</resources>
