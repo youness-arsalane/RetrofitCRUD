@@ -1,42 +1,33 @@
 package com.example.retrofitcrud.ui
 
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.retrofitcrud.RetrofitCRUDApplication
+import com.example.retrofitcrud.data.repository.UsersRepository
+import com.example.retrofitcrud.data.retrofit.RetrofitBuilder
 import com.example.retrofitcrud.ui.viewmodel.users.UserDetailsViewModel
 import com.example.retrofitcrud.ui.viewmodel.users.UserEditViewModel
 import com.example.retrofitcrud.ui.viewmodel.users.UserEntryViewModel
 import com.example.retrofitcrud.ui.viewmodel.users.UserListViewModel
 
 object AppViewModelProvider {
+    private val usersRepository = UsersRepository(RetrofitBuilder.apiService)
+
     val Factory = viewModelFactory {
         initializer {
-            UserEditViewModel(
-                this.createSavedStateHandle(),
-                retrofitCRUDApplication().container
-            )
+            UserEditViewModel(this.createSavedStateHandle(), usersRepository)
         }
 
         initializer {
-            UserEntryViewModel(retrofitCRUDApplication().container)
+            UserEntryViewModel(usersRepository)
         }
 
         initializer {
-            UserDetailsViewModel(
-                this.createSavedStateHandle(),
-                retrofitCRUDApplication().container
-            )
+            UserDetailsViewModel(this.createSavedStateHandle(), usersRepository)
         }
 
         initializer {
-            UserListViewModel(retrofitCRUDApplication().container)
+            UserListViewModel(usersRepository)
         }
     }
-}
-
-fun CreationExtras.retrofitCRUDApplication(): RetrofitCRUDApplication {
-    return (this[AndroidViewModelFactory.APPLICATION_KEY] as RetrofitCRUDApplication)
 }

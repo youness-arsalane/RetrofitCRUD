@@ -1,9 +1,8 @@
 package com.example.retrofitcrud.data.repository
 
 import android.util.Log
-import com.example.retrofitcrud.data.retrofit.ApiService
 import com.example.retrofitcrud.data.model.User
-import kotlinx.coroutines.flow.Flow
+import com.example.retrofitcrud.data.retrofit.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +21,6 @@ class UsersRepository(private val apiService: ApiService) {
     }
 
     suspend fun getUser(id: Int): User {
-        Log.d("HOOD_ALERT_DEBUG", "ID: $id")
         val user = apiService.getUser(id)
         _userDetails.value = user
         return user
@@ -43,11 +41,7 @@ class UsersRepository(private val apiService: ApiService) {
     }
 
     suspend fun deleteUser(user: User) {
-        Log.d("HOOD_ALERT_DEBUG", "deleteUser")
         apiService.deleteUser(user.id)
-        Log.d("HOOD_ALERT_DEBUG", "deleted User!")
-        Log.d("HOOD_ALERT_DEBUG", "currentCount: ${_users.value.count()}")
         _users.value = _users.value.filter { it.id != user.id }
-        Log.d("HOOD_ALERT_DEBUG", "newCount: ${_users.value.count()}")
     }
 }

@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.retrofitcrud.R
@@ -37,7 +36,6 @@ import com.example.retrofitcrud.data.model.User
 import com.example.retrofitcrud.ui.AppViewModelProvider
 import com.example.retrofitcrud.ui.components.DefaultTopAppBar
 import com.example.retrofitcrud.ui.navigation.NavigationDestination
-import com.example.retrofitcrud.ui.theme.RetrofitCRUDTheme
 import com.example.retrofitcrud.ui.viewmodel.users.UserListViewModel
 
 object UserListDestination : NavigationDestination {

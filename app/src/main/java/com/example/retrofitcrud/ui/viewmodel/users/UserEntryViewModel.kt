@@ -5,11 +5,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.retrofitcrud.data.AppDataContainer
 import com.example.retrofitcrud.data.model.User
+import com.example.retrofitcrud.data.repository.UsersRepository
+import com.example.retrofitcrud.data.retrofit.RetrofitBuilder
 
 class UserEntryViewModel(
-    private val appContainer: AppDataContainer
+    private val usersRepository: UsersRepository
 ) : ViewModel() {
     var userUiState by mutableStateOf(UserUiState())
         private set
@@ -27,7 +28,7 @@ class UserEntryViewModel(
         }
 
         val user = userUiState.userDetails.toUser()
-        appContainer.usersRepository.insertUser(user)
+        usersRepository.insertUser(user)
     }
 
     private fun validateInput(uiState: UserDetails = userUiState.userDetails): Boolean {

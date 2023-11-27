@@ -19,7 +19,7 @@ import com.example.retrofitcrud.ui.screens.users.EntryScreen as UserEntryScreen
 import com.example.retrofitcrud.ui.screens.users.ListScreen as UserListScreen
 
 @Composable
-fun RetrofitCRUDNavHost(
+fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {

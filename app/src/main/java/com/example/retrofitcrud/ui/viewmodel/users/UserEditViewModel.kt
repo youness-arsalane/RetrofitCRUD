@@ -7,15 +7,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.retrofitcrud.data.AppDataContainer
+import com.example.retrofitcrud.data.repository.UsersRepository
+import com.example.retrofitcrud.data.retrofit.RetrofitBuilder
 import com.example.retrofitcrud.ui.screens.users.UserEditDestination
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class UserEditViewModel(
     savedStateHandle: SavedStateHandle,
-    private val appContainer: AppDataContainer
+    private val usersRepository: UsersRepository
 ) : ViewModel() {
     var userUiState by mutableStateOf(UserUiState())
         private set
@@ -25,15 +24,14 @@ class UserEditViewModel(
 
     init {
         viewModelScope.launch {
-            Log.d("HOOD_ALERT_DEBUG", "launch2 -> ID: $userId")
-            userUiState = appContainer.usersRepository.getUser(userId)
+            userUiState = usersRepository.getUser(userId)
                 .toUserUiState(true)
         }
     }
 
     suspend fun updateUser() {
         if (validateInput(userUiState.userDetails)) {
-            appContainer.usersRepository.updateUser(userUiState.userDetails.toUser())
+            usersRepository.updateUser(userUiState.userDetails.toUser())
         }
     }
 
